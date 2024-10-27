@@ -1,4 +1,4 @@
-resource "aws_instance" "test-server" {
+ilesresource "aws_instance" "test-server" {
   ami = "ami-04a37924ffe27da53"
   instance_type = "t2.micro"
   key_name = "mykey"
@@ -19,6 +19,6 @@ resource "aws_instance" "test-server" {
      command = "echo ${aws_instance.test-server.public_ip} > inventory"
      }
   provisioner "local-exec" {
-     command = "ansible-playbook /var/lib/jenkins/workspace/BankingProject/terraform/ansibleplaybook.yml"
+     command = "ansible-playbook /var/lib/jenkins/workspace/BankingProject/terraform-files/ansibleplaybook.yml"
      }
   }
