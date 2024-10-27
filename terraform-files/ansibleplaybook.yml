@@ -1,16 +1,24 @@
-- name : Configure Docker on EC2 Instances
-  hosts : all
+- name: Configure Docker on EC2 Instances
+  hosts: all
   become: true
-  connection : ssh
-  tasks : 
-  - name: updating apt
-    command : sudo yum update
+  connection: ssh
+  tasks:
+    - name: Update system packages
+      yum:
+        name: '*'
+        state: latest
 
-  - name : Install Docker
-    command : sudo yum install docker -y
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
 
-  - name : Start Docker Service
-    command : sudo systemctl start docker
+    - name: Start and Enable Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: true
 
-  - name: Deploy Docker Container
-    command: docker run -itd -p 8084:8081 ajay/banking-project-demo:3.0
+    - name: Deploy Docker Container
+      command: docker run -itd -p 8084:8081 ajay/banking-project-demo:3.0
+
